@@ -11,6 +11,8 @@ jobs:
           command: mvn initialize --file Engine/pom.xml
       - run:
           command: mvn install --file Engine/pom.xml
+      - run:
+          command: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install-deps"  --file Engine/pom.xml  
       - run:    
           command: chmod -R 755 ./
       - run:
