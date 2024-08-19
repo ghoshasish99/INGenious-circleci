@@ -1,0 +1,24 @@
+version: 2.1
+jobs:
+  test-java:
+    docker:
+      - image: cimg/openjdk:17.0
+    #working_directory: ~/project/Engine
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          command: mvn initialize --file Engine/pom.xml
+      - run:
+          command: mvn install --file Engine/pom.xml
+      - run:    
+          command: chmod -R 755 ./
+      - run:
+          command: ./Run.command -run -project_location "Projects/ING-Public-Web" -release "Release1" -testset "Set1" 
+      - store_test_results:
+          path: Projects/ING-Public-Web/Results/TestExecution/Release1/Set1/Latest
+workflows:
+  build-and-test:
+    jobs:
+      - test-java
+    
